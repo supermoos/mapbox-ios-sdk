@@ -28,7 +28,7 @@
 #import <UIKit/UIKit.h>
 #import "RMMapLayer.h"
 #import "RMFoundation.h"
-
+#import "RMMapView.h"
 @class RMMarkerStyle;
 
 typedef enum {
@@ -45,6 +45,7 @@ typedef enum {
     UIColor *textForegroundColor;
     UIColor *textBackgroundColor;
 }
+@property (nonatomic, strong) RMMapView *mapView;
 
 /** @name Setting Label Properties */
 
@@ -63,13 +64,13 @@ typedef enum {
 /** @name Creating Markers With Images */
 
 /** Initializes and returns a newly allocated marker object using the specified image.
-*   @param image An image to use for the marker. */
+ *   @param image An image to use for the marker. */
 - (id)initWithUIImage:(UIImage *)image;
 
 /** Initializes and returns a newly allocated marker object using the specified image and anchor point.
-*   @param image An image to use for the marker.
-*   @param anchorPoint A point representing a range from `0` to `1` in each of the height and width coordinate space, normalized to the size of the image, at which to place the image.
-*   @return An initialized marker object. */
+ *   @param image An image to use for the marker.
+ *   @param anchorPoint A point representing a range from `0` to `1` in each of the height and width coordinate space, normalized to the size of the image, at which to place the image.
+ *   @return An initialized marker object. */
 - (id)initWithUIImage:(UIImage *)image anchorPoint:(CGPoint)anchorPoint;
 
 /** @name Creating Markers Using MapBox Images */
@@ -78,34 +79,34 @@ typedef enum {
 - (id)initWithMapBoxMarkerImage;
 
 /** Initializes and returns a newly allocated marker object using a red, medium-sized pin image and a given symbol name, e.g., `bus`.
-*   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
-*   @return An initialized RMMarker layer. */
+ *   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
+ *   @return An initialized RMMarker layer. */
 - (id)initWithMapBoxMarkerImage:(NSString *)symbolName;
 
 /** Initializes and returns a newly allocated marker object using a medium-sized pin image, a given symbol name, e.g., `bus`, and a given color.
-*   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
-*   @param color A color for the marker.
-*   @return An initialized RMMarker layer. */
+ *   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
+ *   @param color A color for the marker.
+ *   @return An initialized RMMarker layer. */
 - (id)initWithMapBoxMarkerImage:(NSString *)symbolName tintColor:(UIColor *)color;
 
-/** Initializes and returns a newly allocated marker object using a pin image, a given symbol name, e.g., `bus`, a given color, and a given size. 
-*   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
-*   @param color A color for the marker.
-*   @param size A size for the marker.
-*   @return An initialized RMMarker layer. */
+/** Initializes and returns a newly allocated marker object using a pin image, a given symbol name, e.g., `bus`, a given color, and a given size.
+ *   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
+ *   @param color A color for the marker.
+ *   @param size A size for the marker.
+ *   @return An initialized RMMarker layer. */
 - (id)initWithMapBoxMarkerImage:(NSString *)symbolName tintColor:(UIColor *)color size:(RMMarkerMapBoxImageSize)size;
 
 /** Initializes and returns a newly allocated marker object using a medium-sized pin image, a given symbol name, e.g., `bus`, and a given HTML hex color, e.g., `ff0000`.
-*   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
-*   @param colorHex A color for the marker specified as an HTML hex code.
-*   @return An initialized RMMarker layer. */
+ *   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
+ *   @param colorHex A color for the marker specified as an HTML hex code.
+ *   @return An initialized RMMarker layer. */
 - (id)initWithMapBoxMarkerImage:(NSString *)symbolName tintColorHex:(NSString *)colorHex;
 
 /** Initializes and returns a newly allocated marker object using a pin image, a given symbol name, e.g., `bus`, a given HTML hex color, e.g., `ff0000`, and a given size, e.g., `large`.
-*   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
-*   @param colorHex A color for the marker specified as an HTML hex code.
-*   @param sizeString A size such as `small`, `medium`, or `large`.
-*   @return An initialized RMMarker layer. */
+ *   @param symbolName A symbol name from the [Maki](http://mapbox.com/maki/) icon set.
+ *   @param colorHex A color for the marker specified as an HTML hex code.
+ *   @param sizeString A size such as `small`, `medium`, or `large`.
+ *   @return An initialized RMMarker layer. */
 - (id)initWithMapBoxMarkerImage:(NSString *)symbolName tintColorHex:(NSString *)colorHex sizeString:(NSString *)sizeString;
 
 /** Clears the local cache of Mapbox Marker images. Images are cached locally upon first use so that if the application goes offline, markers can still be used. */
@@ -113,18 +114,18 @@ typedef enum {
 
 /** @name Altering Labels */
 
-/** Changes the label to a UILabel with the supplied text and default marker font and using the existing text foreground and background colors. 
-*   @param text The text for the label. */
+/** Changes the label to a UILabel with the supplied text and default marker font and using the existing text foreground and background colors.
+ *   @param text The text for the label. */
 - (void)changeLabelUsingText:(NSString *)text;
 
 // changes the labelView to a UILabel with supplied #text and default marker font, positioning the text some weird way i don't understand yet. Uses existing text color/background color.
 - (void)changeLabelUsingText:(NSString *)text position:(CGPoint)position;
 
 /** Changes the label to a UILabel with the supplied text and font and using the given text foreground and background colors.
-*   @param text The text for the label. 
-*   @param font A font to use for the label text. 
-*   @param textColor The color for the label text. 
-*   @param backgroundColor The color for the label background. */
+ *   @param text The text for the label.
+ *   @param font A font to use for the label text.
+ *   @param textColor The color for the label text.
+ *   @param backgroundColor The color for the label background. */
 - (void)changeLabelUsingText:(NSString *)text font:(UIFont *)font foregroundColor:(UIColor *)textColor backgroundColor:(UIColor *)backgroundColor;
 
 // changes the labelView to a UILabel with supplied #text and default marker font, changing this marker's text foreground/background colors for this and future text strings; modifies position as in #changeLabelUsingText:position.
@@ -143,13 +144,13 @@ typedef enum {
 
 /** @name Altering Images */
 
-/** Replace the image for a marker. 
-*   @param image An image to use for the marker. */
+/** Replace the image for a marker.
+ *   @param image An image to use for the marker. */
 - (void)replaceUIImage:(UIImage *)image;
 
 /** Replace the image for a marker using a custom anchor point.
-*   @param image An image to use for the marker.
-*   @param anchorPoint A point representing a range from `0` to `1` in each of the height and width coordinate space, normalized to the size of the image, at which to place the image. */
+ *   @param image An image to use for the marker.
+ *   @param anchorPoint A point representing a range from `0` to `1` in each of the height and width coordinate space, normalized to the size of the image, at which to place the image. */
 - (void)replaceUIImage:(UIImage *)image anchorPoint:(CGPoint)anchorPoint;
 
 @end

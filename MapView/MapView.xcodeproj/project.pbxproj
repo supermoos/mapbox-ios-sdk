@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A06ACF017B23FDB003B6E07 /* FastCATiledLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A06ACEE17B23FDB003B6E07 /* FastCATiledLayer.h */; };
+		0A06ACF117B23FDB003B6E07 /* FastCATiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A06ACEF17B23FDB003B6E07 /* FastCATiledLayer.m */; };
 		126693040EB76C0B00E002D5 /* RMConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 126692A00EB75C0A00E002D5 /* RMConfiguration.m */; };
 		1606C9FE13D86BA400547581 /* RMOpenCycleMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 1606C9FC13D86BA300547581 /* RMOpenCycleMapSource.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1606C9FF13D86BA400547581 /* RMOpenCycleMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 1606C9FD13D86BA300547581 /* RMOpenCycleMapSource.m */; };
@@ -164,6 +166,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A06ACEE17B23FDB003B6E07 /* FastCATiledLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastCATiledLayer.h; sourceTree = "<group>"; };
+		0A06ACEF17B23FDB003B6E07 /* FastCATiledLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastCATiledLayer.m; sourceTree = "<group>"; };
 		1266929F0EB75C0A00E002D5 /* RMConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMConfiguration.h; sourceTree = "<group>"; };
 		126692A00EB75C0A00E002D5 /* RMConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMConfiguration.m; sourceTree = "<group>"; };
 		12F2031E0EBB65E9003D7B6B /* RMMapViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMapViewDelegate.h; sourceTree = "<group>"; };
@@ -520,6 +524,8 @@
 		B8C9740D0E8A196E007D16AD /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				0A06ACEE17B23FDB003B6E07 /* FastCATiledLayer.h */,
+				0A06ACEF17B23FDB003B6E07 /* FastCATiledLayer.m */,
 				DD4BE197161CE296003EF677 /* MapBox.h */,
 				B8C974690E8A1A50007D16AD /* RMMapView.h */,
 				B8C9746A0E8A1A50007D16AD /* RMMapView.m */,
@@ -728,6 +734,7 @@
 				DD2B375114CF814F008DE8CB /* FMDatabaseQueue.h in Headers */,
 				DD5A200B15CAD09400FE4157 /* GRMustache.h in Headers */,
 				DD1E3C6E161F954F004FC649 /* SMCalloutView.h in Headers */,
+				0A06ACF017B23FDB003B6E07 /* FastCATiledLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +894,7 @@
 				DDE357F516522661001DB842 /* RMPolylineAnnotation.m in Sources */,
 				DDE357F916522CD8001DB842 /* RMPolygonAnnotation.m in Sources */,
 				DD1985C2165C5F6400DF667F /* RMTileMillSource.m in Sources */,
+				0A06ACF117B23FDB003B6E07 /* FastCATiledLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

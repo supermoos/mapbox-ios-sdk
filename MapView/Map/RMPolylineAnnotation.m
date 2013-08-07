@@ -45,18 +45,24 @@
     if ( ! [super layer])
     {
         RMShape *shape = [[RMShape alloc] initWithView:self.mapView];
-
+        
+        shape.lineColor = [UIColor colorWithHue:(175/360.0f) saturation:0.33 brightness:0.79 alpha:1];
+        shape.lineWidth = 80000;
+        //shape.lineCap = kCALineCapRound;
+        //shape.lineJoin = kCALineJoinRound;
+        shape.scaleLineWidth = YES;
+        shape.scaleLineDash = YES;
         [shape performBatchOperations:^(RMShape *aShape)
-        {
-            [aShape moveToCoordinate:self.coordinate];
-
-            for (CLLocation *point in self.points)
-                [aShape addLineToCoordinate:point.coordinate];
-        }];
-
+         {
+             [aShape moveToCoordinate:self.coordinate];
+             
+             for (CLLocation *point in self.points)
+                 [aShape addLineToCoordinate:point.coordinate];
+         }];
+        
         super.layer = shape;
     }
-
+    
     return [super layer];
 }
 

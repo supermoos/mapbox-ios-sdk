@@ -34,7 +34,7 @@
 
 @synthesize label;
 @synthesize textForegroundColor;
-@synthesize textBackgroundColor;
+@synthesize textBackgroundColor, mapView;
 
 #define defaultMarkerAnchorPoint CGPointMake(0.5, 0.5)
 
@@ -50,13 +50,31 @@
 {
     if (!(self = [super init]))
         return nil;
-
+    
     label = nil;
     textForegroundColor = [UIColor blackColor];
     textBackgroundColor = [UIColor clearColor];
-
+    
     return self;
 }
+
+- (void)setPosition:(CGPoint)aPosition animated:(BOOL)animated
+{
+    [self setPosition:aPosition];
+    [self updateBounds];
+    // NSLog(@"Bounds: %@", NSStringFromCGRect(self.bounds));
+}
+
+- (void) updateBounds
+{
+    //CGFloat scale = MIN(MAX(metersPerPixel / [mapView metersPerPixel], minScale), maxScale);
+    //  NSLog(@"Meters per pixel: %f", [self.mapView metersPerPixel]);
+    float scale = (73129.592482 / [self.mapView metersPerPixel]) * 3;
+    self.bounds = CGRectMake(0, 0, scale, scale);
+    //self.label.bounds = self.bounds;
+}
+
+
 
 - (id)initWithUIImage:(UIImage *)image
 {
@@ -67,15 +85,15 @@
 {
     if (!(self = [self init]))
         return nil;
-
+    
     self.contents = (id)[image CGImage];
     self.contentsScale = image.scale;
     self.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     self.anchorPoint = _anchorPoint;
-
+    
     self.masksToBounds = NO;
     self.label = nil;
-
+    
     return self;
 }
 
@@ -103,12 +121,12 @@
         case RMMarkerMapBoxImageSizeSmall:
             sizeString = @"small";
             break;
-        
+            
         case RMMarkerMapBoxImageSizeMedium:
         default:
             sizeString = @"medium";
             break;
-        
+            
         case RMMarkerMapBoxImageSizeLarge:
             sizeString = @"large";
             break;
@@ -119,9 +137,9 @@
     if (color)
     {
         CGFloat red, green, blue, alpha;
-
+        
         if ([color getRed:&red green:&green blue:&blue alpha:&alpha])
-            colorHex = [NSString stringWithFormat:@"%02x%02x%02x", (NSUInteger)(red * 255), (NSUInteger)(green * 255), (NSUInteger)(blue * 255)];
+            colorHex = [NSString stringWithFormat:@"%02x%02x%02x", ((NSUInteger)red * 255), ((NSUInteger)green * 255), ((NSUInteger)blue * 255)];
     }
     
     return [self initWithMapBoxMarkerImage:symbolName tintColorHex:colorHex sizeString:sizeString];
@@ -136,12 +154,12 @@
 {
     BOOL useRetina = ([[UIScreen mainScreen] scale] > 1.0);
     
-    NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.tiles.mapbox.com/v3/marker/pin-%@%@%@%@.png",
-                                               (sizeString ? [sizeString substringToIndex:1] : @"m"), 
-                                               (symbolName ? [@"-" stringByAppendingString:symbolName] : @"-star"),
-                                               (colorHex   ? [@"+" stringByAppendingString:[colorHex stringByReplacingOccurrencesOfString:@"#" withString:@""]] : @"+ff0000"),
-                                               (useRetina  ? @"@2x" : @"")]];
-
+    NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://a.tiles.mapbox.com/v3/marker/pin-%@%@%@%@.png",
+                                            (sizeString ? [sizeString substringToIndex:1] : @"m"),
+                                            (symbolName ? [@"-" stringByAppendingString:symbolName] : @"-star"),
+                                            (colorHex   ? [@"+" stringByAppendingString:[colorHex stringByReplacingOccurrencesOfString:@"#" withString:@""]] : @"+ff0000"),
+                                            (useRetina  ? @"@2x" : @"")]];
+    
     UIImage *image = nil;
     
     NSString *cachePath = [NSString stringWithFormat:@"%@/%@", kCachesPath, [imageURL lastPathComponent]];
@@ -173,7 +191,7 @@
     self.contents = (id)[image CGImage];
     self.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     self.anchorPoint = _anchorPoint;
-
+    
     self.masksToBounds = NO;
 }
 
@@ -181,10 +199,10 @@
 {
     if (label == aView)
         return;
-
+    
     if (label != nil)
         [[label layer] removeFromSuperlayer];
-
+    
     if (aView != nil)
     {
         label = aView;
@@ -195,14 +213,14 @@
 - (void)setTextBackgroundColor:(UIColor *)newTextBackgroundColor
 {
     textBackgroundColor = newTextBackgroundColor;
-
+    
     self.label.backgroundColor = textBackgroundColor;
 }
 
 - (void)setTextForegroundColor:(UIColor *)newTextForegroundColor
 {
     textForegroundColor = newTextForegroundColor;
-
+    
     if ([self.label respondsToSelector:@selector(setTextColor:)])
         ((UILabel *)self.label).textColor = textForegroundColor;
 }
@@ -230,7 +248,7 @@
 {
     CGSize textSize = [text sizeWithFont:font];
     CGRect frame = CGRectMake(position.x, position.y, textSize.width+4, textSize.height+4);
-
+    
     UILabel *aLabel = [[UILabel alloc] initWithFrame:frame];
     [self setTextForegroundColor:textColor];
     [self setTextBackgroundColor:backgroundColor];
@@ -239,12 +257,12 @@
     [aLabel setBackgroundColor:backgroundColor];
     [aLabel setTextColor:textColor];
     [aLabel setFont:font];
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [aLabel setTextAlignment:UITextAlignmentCenter];
-    #pragma clang diagnostic pop
+#pragma clang diagnostic pop
     [aLabel setText:text];
-
+    
     [self setLabel:aLabel];
 }
 
@@ -252,7 +270,7 @@
 {
     if (self.label == nil)
         return;
-
+    
     if ([self.label isHidden])
         [self showLabel];
     else
@@ -278,5 +296,7 @@
         [self.label setHidden:YES];
     }
 }
+
+
 
 @end
